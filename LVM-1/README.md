@@ -33,5 +33,6 @@ vagrant ssh
 Script started, file is lvm-1
 ```
 Результат выполнения ДЗ по ссылке
-https://github.com/Topper-crypto/otus-lvm-1/blob/main/lvm-1
+https://github.com/Topper-crypto/otus/blob/main/LVM-1/lvm-1
+
 
