@@ -1,3 +1,3 @@
-ДЗ №3 - otus_mdadm
+ДЗ №3 - mdadm
 
 ДЗ №4 - ZFS
