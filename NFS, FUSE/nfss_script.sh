@@ -1,19 +1,22 @@
 #!/bin/bash
+vagrant ssh nfss
 yum update -y
 yum install nfs-utils -y
-mkdir /var/share
-chmod -R 777 /var/share
-echo "/var/share 192.168.50.10(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
-systemctl start rpcbind
-systemctl enable rpcbind
-systemctl start nfs-server
-systemctl enable nfs-server
-exportfs -a
-systemctl restart nfs-server
-systemctl start firewalld
-systemctl enable firewalld
-firewall-cmd --permanent --add-service=nfs
-firewall-cmd --permanent --add-service=nfs3
-firewall-cmd --permanent --add-service=mountd
-firewall-cmd --permanent --add-service=rpc-bind
+systemctl enable firewalld --now
+systemctl status firewalld
+firewall-cmd --add-service="nfs" \
+--add-service="nfs3" \
+--add-service="rpc-bind" \
+--add-service="mountd" \
+--permanent
 firewall-cmd --reload
+systemctl enable nfs --now
+ss -tnplu
+mkdir -p /srv/share/upload
+chown -R nfsnobody:nfsnobody /srv/share
+chmod 0777 /srv/share/upload
+cat << EOF > /etc/exports
+/srv/share 192.168.50.11/32(rw,sync,root_squash)
+EOF
+exportfs -r
+exportfs -s
