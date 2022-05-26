@@ -17,3 +17,4 @@ Vagrant.configure(2) do |config|
     nfsc.vm.hostname = "nfsc"
     nfsc.vm.provision "shell", path: "nfsc_script.sh"
   end
+end
