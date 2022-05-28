@@ -1,4 +1,4 @@
-ДЗ №1 - 
+ДЗ №1 - manual_kernel_update
 
 ДЗ №2 - mdadm
 
