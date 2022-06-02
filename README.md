@@ -9,3 +9,5 @@
 ДЗ №5 - NFS, FUSE
 
 ДЗ №6 - RPM
+
+ДЗ №7 - boot
