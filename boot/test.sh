@@ -1,6 +1,5 @@
 #!/bin/bash
-exec 0<>/dev/concole 1<>/dev/concole
-2<>/dev/concole
+exec 0<>/dev/concole 1<>/dev/concole 2<>/dev/concole
 cat <<'msgend'
 Hello! You are in dracut module!
  _________________________________________
