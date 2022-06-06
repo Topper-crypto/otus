@@ -9,27 +9,36 @@
 
 ### Задача 1
 ```
-[topper@fedora ~]$ sudo nano /etc/sysconfig/watchlog
+[root@localhost ~]# nano /etc/sysconfig/watchlog
 ```
 ```
-# Configuration file for my watchdog service
-# Place it to /etc/sysconfig
-# File and word in that file that we will be monit
-WORD="ALERT"
-LOG=/var/log/watchlog.log
+[root@localhost ~]# nano /var/log/watchlog.log
 ```
 ```
-[topper@fedora ~]$ sudo nano /var/log/watchlog.log
+[root@localhost ~]# nano /opt/watchlog.sh
 ```
 ```
-ALERT
+[root@localhost ~]# chmod +x /opt/watchlog.sh
 ```
 ```
-[topper@fedora ~]$ sudo nano /opt/watchlog.sh
+[root@localhost ~]# nano /etc/systemd/system/watchlog.service
 ```
+```
+[root@localhost ~]# nano /etc/systemd/system/watchlog.timer
+```
+```
+[root@localhost ~]# systemctl enable watchlog.timer
+Created symlink from /etc/systemd/system/multi-user.target.wants/watchlog.timer to /etc/systemd/system/watchlog.timer.
+```
+```
+[root@localhost ~]# systemctl start watchlog.timer
+```
+```
+[topper@fedora ~]$ sudo tail -f /var/log/messages
 
+```
 ### Задача 2
-### Решение:
+
 
 ### Задача 3
 ### Решение:
