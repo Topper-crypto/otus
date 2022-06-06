@@ -11,3 +11,5 @@
 ДЗ №6 - RPM
 
 ДЗ №7 - boot
+
+ДЗ №8 - Systemd
