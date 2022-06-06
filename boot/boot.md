@@ -54,34 +54,55 @@
 
 ### Задание 4.
 
+```
 [root@localhost ~]# parted
+```
+```
 (parted) select /dev/sdb
 Using /dev/sdb
+```
+```
 (parted) mklabel msdos
+```
+```
 (parted) mkpart                                                           
 Partition type?  primary/extended? p                                      
 File system type?  [ext2]? ext4                                           
 Start? 1                                                                  
-End? -1  
+End? -1
+```
+```
 [root@localhost ~]# pvcreate /dev/sdb1 --bootloaderareasize 1M
   Physical volume "/dev/sdb1" successfully created.
+```
+```
 [root@localhost ~]# vgcreate new-root /dev/sdb1
   Volume group "new-root" successfully created
+```
+```
 [root@localhost ~]# lvcreate -n root -l 100%FREE new-root
   Logical volume "root" created.
+```
+```
 [root@localhost ~]# pvs
   PV         VG       Fmt  Attr PSize   PFree
   /dev/sda2  centos   lvm2 a--   22.58g 4.00m
   /dev/sdb1  new-root lvm2 a--  <42.36g    0 
+```
+```
 [root@localhost ~]# vgs
   VG       #PV #LV #SN Attr   VSize   VFree
   centos     1   2   0 wz--n-  22.58g 4.00m
   new-root   1   1   0 wz--n- <42.36g    0   
+```
+```
  [root@localhost ~]# lvs
   LV   VG       Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
   root centos   -wi-ao---- <20.58g                                                    
   swap centos   -wi-ao----   2.00g                                                    
   root new-root -wi-a----- <42.36g    
+```
+```
 [root@localhost ~]# mkfs.ext4 /dev/mapper/new--root-root 
 mke2fs 1.42.9 (28-Dec-2013)
 Filesystem label=
@@ -104,22 +125,41 @@ Allocating group tables: done
 Writing inode tables: done                            
 Creating journal (32768 blocks): done
 Writing superblocks and filesystem accounting information: done  
+```
+```
 [root@localhost ~]# mkdir /mnt/root
+```
+```
 [root@localhost ~]# mount /dev/mapper/new--root-root /mnt/root
+```
+```
 [root@localhost ~]# rsync -avx / /mnt/root
 ...
 sent 1,565,579,066 bytes  received 636,750 bytes  101,046,181.68 bytes/sec
 total size is 1,563,007,575  speedup is 1.00
-
+```
+```
 [root@localhost ~]# rsync -avx /boot /mnt/root
 ...
 sent 168,076,798 bytes  received 6,202 bytes  112,055,333.33 bytes/sec
 total size is 168,014,538  speedup is 1.00
+```
+```
 [root@localhost ~]# mount --rbind /dev/ /mnt/root/dev
+```
+```
 [root@localhost ~]# mount --rbind /proc /mnt/root/proc
+```
+```
 [root@localhost ~]# mount --rbind /sys /mnt/root/sys
+```
+```
 [root@localhost ~]# mount --rbind /run /mnt/root/run
+```
+```
 [root@localhost ~]# chroot /mnt/root
+```
+```
 [root@localhost /]# cat /etc/fstab
 
 #
@@ -132,8 +172,12 @@ total size is 168,014,538  speedup is 1.00
 /dev/mapper/new--root-root /                       ext4     defaults        0 0
 #UUID=916149ff-1339-4c08-8e76-a64ddcc3f2aa /boot                   xfs     defaults        0 0
 /dev/mapper/centos-swap swap                    swap    defaults        0 0
+```
+```
 [root@localhost /]# nano /etc/default/grub 
 # меняем в GRUB_CMDLINE_LINUX значение rd.lvm.lv на rd.lvm.lv=new--root/root
+```
+```
 [root@localhost /]# grub2-mkconfig -o /boot/grub2/grub.cfg
 Generating grub configuration file ...
 Found linux image: /boot/vmlinuz-3.10.0-1160.66.1.el7.x86_64
@@ -143,20 +187,27 @@ Found initrd image: /boot/initramfs-3.10.0-1160.el7.x86_64.img
 Found linux image: /boot/vmlinuz-0-rescue-64b35b4797508c48905f111062ded685
 Found initrd image: /boot/initramfs-0-rescue-64b35b4797508c48905f111062ded685.img
 done
+```
+```
 [root@localhost /]# dracut -f -v /boot/initramfs-3.10.0-862.2.3.el7.x86_64.img
 ...
 *** Creating image file done ***
 *** Creating initramfs image file '/boot/initramfs-3.10.0-862.2.3.el7.x86_64.img' done ***
+```
+```
 [root@localhost /]# grub2-install /dev/sdb
 Installing for i386-pc platform.
 Installation finished. No error reported.
+```
+```
 [root@localhost /]# nano /etc/selinux/config
 SELINUX=disabled
-
-выходим и загружаемся с нового диска
-
+```
+Выходим и загружаемся с нового диска
+```
 [topper@localhost ~]$ lsblk
 NAME               MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 sda                  8:0    0 23.6G  0 disk 
 └─sdb1               8:17   0 42.4G  0 part 
   └─new--root-root 253:2    0 42.4G  0 lvm  /
+```
