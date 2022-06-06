@@ -55,10 +55,9 @@ Jun  6 22:11:24 localhost root: Mon Jun  6 22:11:24 MSK 2022: I found word, Mast
 Jun  6 22:11:24 localhost systemd: Started My watchlog service.
 ```
 ### Задача 2
+```
+[root@localhost ~]# yum install epel-release -y && yum install spawn-fcgi php php-climod_fcgid httpd -y
+```
 
 
 ### Задача 3
-### Решение:
-
-### Задача 4
-### Решение:
