@@ -28,14 +28,31 @@
 ```
 ```
 [root@localhost ~]# systemctl enable watchlog.timer
-Created symlink from /etc/systemd/system/multi-user.target.wants/watchlog.timer to /etc/systemd/system/watchlog.timer.
+[root@localhost ~]# systemctl enable watchlog.service
+```
+```
+[root@localhost ~]# systemctl daemon-reload
 ```
 ```
 [root@localhost ~]# systemctl start watchlog.timer
+[root@localhost ~]# systemctl start watchlog.service
 ```
+Для теста скрипт запускается каждые 5 сек.
 ```
-[topper@fedora ~]$ sudo tail -f /var/log/messages
-
+[root@localhost ~]# tail -f /var/log/messages
+Jun  6 22:10:51 localhost systemd: Reloading.
+Jun  6 22:10:51 localhost systemd: Starting My watchlog service...
+Jun  6 22:10:51 localhost root: Mon Jun  6 22:10:51 MSK 2022: I found word, Master!
+Jun  6 22:10:51 localhost systemd: Started My watchlog service.
+Jun  6 22:10:56 localhost systemd: Starting My watchlog service...
+Jun  6 22:10:56 localhost root: Mon Jun  6 22:10:56 MSK 2022: I found word, Master!
+Jun  6 22:10:56 localhost systemd: Started My watchlog service.
+Jun  6 22:10:56 localhost systemd: Starting My watchlog service...
+Jun  6 22:10:56 localhost root: Mon Jun  6 22:10:56 MSK 2022: I found word, Master!
+Jun  6 22:10:56 localhost systemd: Started My watchlog service.
+Jun  6 22:11:24 localhost systemd: Starting My watchlog service...
+Jun  6 22:11:24 localhost root: Mon Jun  6 22:11:24 MSK 2022: I found word, Master!
+Jun  6 22:11:24 localhost systemd: Started My watchlog service.
 ```
 ### Задача 2
 
