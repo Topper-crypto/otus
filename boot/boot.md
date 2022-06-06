@@ -44,3 +44,5 @@
 * Перезагружаем систему. Теперь система загружается с новым названием VG ```centos1```.
 
 ### Задание 3.
+
+![](https://github.com/Topper-crypto/otus/blob/main/boot/dracut.png)
