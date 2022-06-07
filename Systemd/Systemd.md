@@ -58,6 +58,59 @@ Jun  6 22:11:24 localhost systemd: Started My watchlog service.
 ```
 [root@localhost ~]# yum install epel-release -y && yum install spawn-fcgi php php-climod_fcgid httpd -y
 ```
+```
+[root@localhost ~]#  nano /etc/sysconfig/spawn-fcgi
+```
+```
+[root@localhost ~]# nano /etc/systemd/system/spawn-fcgi.service
+```
+```
+[root@localhost ~]# systemctl daemon-reload
+```
+```
+[root@localhost ~]# systemctl start spawn-fcgi
+```
+```
+[root@localhost ~]# systemctl status spawn-fcgi
+● spawn-fcgi.service - Spawn-fcgi startup service by Otus
+   Loaded: loaded (/etc/systemd/system/spawn-fcgi.service; disabled; vendor preset: disabled)
+   Active: active (running) since Tue 2022-06-07 18:41:20 MSK; 8s ago
+ Main PID: 1566 (php-cgi)
+   CGroup: /system.slice/spawn-fcgi.service
+           ├─1566 /usr/bin/php-cgi
+           ├─1567 /usr/bin/php-cgi
+           ├─1568 /usr/bin/php-cgi
+           ├─1569 /usr/bin/php-cgi
+           ├─1570 /usr/bin/php-cgi
+           ├─1571 /usr/bin/php-cgi
+           ├─1572 /usr/bin/php-cgi
+           ├─1573 /usr/bin/php-cgi
+           ├─1574 /usr/bin/php-cgi
+           ├─1575 /usr/bin/php-cgi
+           ├─1576 /usr/bin/php-cgi
+           ├─1577 /usr/bin/php-cgi
+           ├─1578 /usr/bin/php-cgi
+           ├─1579 /usr/bin/php-cgi
+           ├─1580 /usr/bin/php-cgi
+           ├─1581 /usr/bin/php-cgi
+           ├─1582 /usr/bin/php-cgi
+           ├─1583 /usr/bin/php-cgi
+           ├─1584 /usr/bin/php-cgi
+           ├─1585 /usr/bin/php-cgi
+           ├─1586 /usr/bin/php-cgi
+           ├─1587 /usr/bin/php-cgi
+           ├─1588 /usr/bin/php-cgi
+           ├─1589 /usr/bin/php-cgi
+           ├─1590 /usr/bin/php-cgi
+           ├─1591 /usr/bin/php-cgi
+           ├─1592 /usr/bin/php-cgi
+           ├─1593 /usr/bin/php-cgi
+           ├─1594 /usr/bin/php-cgi
+           ├─1595 /usr/bin/php-cgi
+           ├─1596 /usr/bin/php-cgi
+           ├─1597 /usr/bin/php-cgi
+           └─1598 /usr/bin/php-cgi
 
-
+Jun 07 18:41:20 localhost.localdomain systemd[1]: Started Spawn-fcgi startup service by Otus.
+```
 ### Задача 3
