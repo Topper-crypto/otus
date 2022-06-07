@@ -13,3 +13,5 @@
 ДЗ №7 - boot
 
 ДЗ №8 - Systemd
+
+ДЗ №9 - Bash
