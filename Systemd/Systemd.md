@@ -114,3 +114,84 @@ Jun  6 22:11:24 localhost systemd: Started My watchlog service.
 Jun 07 18:41:20 localhost.localdomain systemd[1]: Started Spawn-fcgi startup service by Otus.
 ```
 ### Задача 3
+```
+[root@localhost ~]# cp /usr/lib/systemd/system/httpd.service /etc/systemd/system
+```
+```
+[root@localhost ~]# mv /etc/systemd/system/httpd.service /etc/systemd/system/httpd@.service
+```
+```
+[root@localhost ~]# nano /etc/systemd/system/httpd@.service
+```
+```
+[root@localhost ~]# nano /etc/sysconfig/httpd-first
+```
+```
+[root@localhost ~]# nano /etc/sysconfig/httpd-second
+```
+```
+[root@localhost ~]# mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/first.conf
+```
+```
+[root@localhost ~]# cp /etc/httpd/conf/first.conf /etc/httpd/conf/second.conf
+```
+```
+[root@localhost ~]# sed -i '43iPidFile  \/var\/run\/httpd-second.pid' /etc/httpd/conf/second.conf
+[root@localhost ~]# sed -i  '42 s/80/8080/1' /etc/httpd/conf/second.conf
+```
+```
+[root@localhost ~]# systemctl daemon-reload
+```
+```
+[root@localhost ~]# systemctl start httpd@first
+[root@localhost ~]# systemctl start httpd@second
+```
+```
+[root@localhost ~]# systemctl status httpd@first.service
+● httpd@first.service - The Apache HTTP Server
+   Loaded: loaded (/etc/systemd/system/httpd@.service; disabled; vendor preset: disabled)
+   Active: active (running) since Tue 2022-06-07 19:20:19 MSK; 32s ago
+     Docs: man:httpd(8)
+           man:apachectl(8)
+ Main PID: 1860 (httpd)
+   Status: "Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec"
+   CGroup: /system.slice/system-httpd.slice/httpd@first.service
+           ├─1860 /usr/sbin/httpd -f conf/first.conf -DFOREGROUND
+           ├─1861 /usr/sbin/httpd -f conf/first.conf -DFOREGROUND
+           ├─1862 /usr/sbin/httpd -f conf/first.conf -DFOREGROUND
+           ├─1863 /usr/sbin/httpd -f conf/first.conf -DFOREGROUND
+           ├─1864 /usr/sbin/httpd -f conf/first.conf -DFOREGROUND
+           └─1865 /usr/sbin/httpd -f conf/first.conf -DFOREGROUND
+
+Jun 07 19:20:19 localhost.localdomain systemd[1]: Starting The Apache HTTP Server...
+Jun 07 19:20:19 localhost.localdomain httpd[1860]: AH00558: httpd: Could not reliably determine...geJun 07 19:20:19 localhost.localdomain systemd[1]: Started The Apache HTTP Server.
+Hint: Some lines were ellipsized, use -l to show in full.
+```
+```
+[root@localhost ~]# systemctl status httpd@second.service
+● httpd@second.service - The Apache HTTP Server
+   Loaded: loaded (/etc/systemd/system/httpd@.service; disabled; vendor preset: disabled)
+   Active: active (running) since Tue 2022-06-07 19:20:24 MSK; 45s ago
+     Docs: man:httpd(8)
+           man:apachectl(8)
+ Main PID: 1872 (httpd)
+   Status: "Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec"
+   CGroup: /system.slice/system-httpd.slice/httpd@second.service
+           ├─1872 /usr/sbin/httpd -f conf/second.conf -DFOREGROUND
+           ├─1873 /usr/sbin/httpd -f conf/second.conf -DFOREGROUND
+           ├─1874 /usr/sbin/httpd -f conf/second.conf -DFOREGROUND
+           ├─1875 /usr/sbin/httpd -f conf/second.conf -DFOREGROUND
+           ├─1876 /usr/sbin/httpd -f conf/second.conf -DFOREGROUND
+           └─1877 /usr/sbin/httpd -f conf/second.conf -DFOREGROUND
+
+Jun 07 19:20:24 localhost.localdomain systemd[1]: Starting The Apache HTTP Server...
+Jun 07 19:20:24 localhost.localdomain httpd[1872]: AH00558: httpd: Could not reliably determine...geJun 07 19:20:24 localhost.localdomain systemd[1]: Started The Apache HTTP Server.
+Hint: Some lines were ellipsized, use -l to show in full.
+```
+```
+[root@localhost ~]# netstat -tunap
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp6       0      0 :::8080                 :::*                    LISTEN      1872/httpd          
+tcp6       0      0 :::80                   :::*                    LISTEN      1860/httpd          
+```
