@@ -8,7 +8,8 @@
 * список всех кодов возврата с указанием их кол-ва с момента последнего запуска. В письме должно быть прописан обрабатываемый временной диапазон и должна быть реализована защита от мультизапуска.
 
 ### Решение:
-1. настройка mailx
+
+настройка mailx
 
 ```
 ln -s /bin/mailx /bin/email
@@ -25,8 +26,9 @@ set smtp-auth-password=fujaviolumglqkmq
 set ssl-verify=ignore
 set nss-config-dir=/etc/pki/nssdb/
 ```
-Проверка корректности настроек
-```
-echo "This is the body of the email" | mailx -vvv -s "Letter subject" -r "test@td-minkom.ru" -S smtp="smtp.yandex.ru" -a test.txt korovin80@ya.ru
-```
 
+access.log - файл с логами
+
+provision.sh - установка дополнительных компонетнов, файла для лога работы скрипта, создание задания cron с блокировкой через flock
+
+pars.sh - разбор лога по заданию.
