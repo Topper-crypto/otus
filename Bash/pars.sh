@@ -29,5 +29,4 @@ echo "$logpars" | cut -f 9 -d ' ' | sort | uniq -c | sort -n -r
 echo "все ошибки"
 echo "$logpars" | awk '$9 != "200"' )
 
-#echo "$logmail" | mailx -s "Log from $tmstart" root@localhost
-echo "This is the body of the email" | mailx -vvv -s "Letter subject" -r "test@td-minkom.ru" -S smtp="smtp.yandex.ru" -a test.txt korovin80@ya.ru
+echo "$logmail" | mailx -vvv -s "Log from $tmstart" -r "test@td-minkom.ru" -S smtp="smtp.yandex.ru" korovin80@ya.ru
