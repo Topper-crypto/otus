@@ -1,22 +1,21 @@
 #!/bin/bash
 
-tmlast=$(tail -n1 /var/tmp/parstime.log ) #время предыдущего запуска
+tmlast=$(tail -n1 /var/tmp/parstime.log )
 
-tmstart=$(date +%F"T"%T) #время запуска
+tmstart=$(date +%F"T"%T)
 
-TT=$(date -d $tmlast +%s)  #время предыдущего запуска в сек
+TT=$(date -d $tmlast +%s)
 
-vagrant/accesscho $tmstart >> /var/tmp/parstime.log #передача даты последнего запуска для последующих выполнений
+vagrant/accesscho $tmstart >> /var/tmp/parstime.log 
 
-# Строки из лога с момента последнего запуска перенаправлены в переменную
 logpars=$(
 cat /vagrant/access.log |
-sed 's/\//-/1' | #замена первого разделителя даты / на -
-sed 's/\//-/1' | #замена второго разделителя даты / на -
-sed 's/\:/T/1' | #замена разделителя даты и времени : на T,  его понимает команда date
-sed 's/\[//1'  | #убрал скобку [ c даты
-awk '{cmd="date -d "$4" +%s"; cmd | getline x; close(cmd);$4=x;print $0}' | # время в секундах в 4 поле, в логе
-awk -v DD=$TT '$4 > DD {print}') #вывод строк дата которых больше заданной даты
+sed 's/\//-/1' |
+sed 's/\//-/1' |
+sed 's/\:/T/1' |
+sed 's/\[//1'  |
+awk '{cmd="date -d "$4" +%s"; cmd | getline x; close(cmd);$4=x;print $0}' |
+awk -v DD=$TT '$4 > DD {print}')
 
 logmail=$(
 echo "Лог с " $tmlast "до" $tmstart
