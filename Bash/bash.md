@@ -32,3 +32,5 @@ access.log - файл с логами
 provision.sh - установка дополнительных компонетнов, файла для лога работы скрипта, создание задания cron с блокировкой через flock
 
 pars.sh - разбор лога по заданию.
+
+![](https://github.com/Topper-crypto/otus/blob/main/Bash/log.png)
