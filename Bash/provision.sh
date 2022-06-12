@@ -1,7 +1,6 @@
 #!/bin/bash
-yum install -y update
-yum install -y mailx
-yum install -y flock
+yum update -y
+yum install -y mailx flock
 chmod +x /vagrant/pars.sh
 
 #Начальная дата для певого фильтра лога, для демонстрации работы 
