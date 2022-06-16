@@ -24,6 +24,33 @@
 
 ### Решение:
 
-Реализовать 2 конкурирующих процесса по CPU. пробовать запустить с разными nice
+2. Написать свою реализацию lsof
+
+script_2.sh - аналог команды lsof. Программа показывает PID, USER, открытые файлы, и каким процессом они открыты. Данные извлекаются из псевдофайловой системы proc.
+
+```
+[topper@localhost script]$ ./script_2.sh
+PID        USER                 NAME                                      COMM
+1487       topper               /home/topper                              bash
+1512       topper               /home/topper/script                       bash
+1574       topper               /home/topper/script                script_2.sh
+```
+
+5. Реализовать 2 конкурирующих процесса по CPU. Пробовать запустить с разными nice
+
+script_5.sh - Скрипт, который запускает параллельно два процесса с разными приоритетами. 
+Два процеса архивируют один и тот же файл созданный DD один с nice 20, другой -20.
+
+```
+[topper@localhost script]$ ./script_5.sh
+1+0 records in
+1+0 records out
+128000000 bytes (128 MB) copied, 0.129862 s, 986 MB/s
+nice: cannot set niceness: Permission denied
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from member names
+HI 2
+LOW 4
+```
 
 
