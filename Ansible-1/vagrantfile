@@ -5,14 +5,14 @@ MACHINES = {
 		:box_name => "centos/7",
 		:cpus => 2,
 		:memory => 2048,
-		:ip_addr => '192.168.55.150',
+		:ip_addr => '192.168.56.150',
 		:path => './nginx.sh'
 	},
 	:ansible => {
 		:box_name => "centos/7",
 		:cpus => 2,
 		:memory => 2048,
-		:ip_addr => '192.168.55.10',
+		:ip_addr => '192.168.56.10',
 		:path => './ansible.sh'
 	},
 }
