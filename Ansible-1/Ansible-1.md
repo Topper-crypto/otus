@@ -9,5 +9,7 @@
 > * сайт должен слушать на нестандартном порту - 8080, для этого использовать переменные в Ansible.
 
 Ответ:
-[]!()
+
+[]!(https://github.com/Topper-crypto/otus/blob/main/Ansible-1/Ansible-1.png)
+
 []!()
