@@ -2,24 +2,23 @@
 
 ### Описание/Пошаговая инструкция выполнения домашнего задания:
 
-1. Запустить nginx на нестандартном порту 3-мя разными способами:
-
-* переключатели setsebool;
-* добавление нестандартного порта в имеющийся тип;
-* формирование и установка модуля SELinux. 
-
-К сдаче:
-
-* README с описанием каждого решения (скриншоты и демонстрация приветствуются).
- 
-2. Обеспечить работоспособность приложения при включенном selinux.
-* развернуть приложенный стенд https://github.com/mbfx/otus-linux-adm/tree/master/selinux_dns_problems;
-* выяснить причину неработоспособности механизма обновления зоны (см. README);
-* предложить решение (или решения) для данной проблемы;
-* выбрать одно из решений для реализации, предварительно обосновав выбор;
-* реализовать выбранное решение и продемонстрировать его работоспособность. К сдаче:
-* README с анализом причины неработоспособности, возможными способами решения и обоснованием выбора одного из них;
-* исправленный стенд или демонстрация работоспособной системы скриншотами и описанием.
+> 1. Запустить nginx на нестандартном порту 3-мя разными способами:
+> 
+> * переключатели setsebool;
+> * добавление нестандартного порта в имеющийся тип;
+> * формирование и установка модуля SELinux. 
+> 
+> К сдаче:> 
+> * README с описанием каждого решения (скриншоты и демонстрация приветствуются).
+>  
+> 2. Обеспечить работоспособность приложения при включенном selinux.
+> * развернуть приложенный стенд https://github.com/mbfx/otus-linux-adm/tree/master/selinux_dns_problems;
+> * выяснить причину неработоспособности механизма обновления зоны (см. README);
+> * предложить решение (или решения) для данной проблемы;
+> * выбрать одно из решений для реализации, предварительно обосновав выбор;
+> * реализовать выбранное решение и продемонстрировать его работоспособность. К сдаче:
+> * README с анализом причины неработоспособности, возможными способами решения и обоснованием выбора одного из них;
+> * исправленный стенд или демонстрация работоспособной системы скриншотами и описанием.
 
 ### Задача 1
 
@@ -114,6 +113,35 @@ Jul 07 18:20:06 selinux systemd[1]: Started The nginx HTTP and reverse proxy ser
 Вариант 3
 
 ```
+[root@selinux ~]# grep nginx /var/log/audit/audit.log | audit2allow -M nginx
+******************** IMPORTANT ***********************
+To make this policy package active, execute:
+
+semodule -i nginx.pp
+```
+```
+[root@selinux ~]# semodule -i nginx.pp
+```
+```
+[root@selinux ~]# systemctl restart nginx
+```
+```
+[root@selinux ~]# systemctl status nginx
+● nginx.service - The nginx HTTP and reverse proxy server
+   Loaded: loaded (/usr/lib/systemd/system/nginx.service; disabled; vendor preset: disabled)
+   Active: active (running) since Thu 2022-07-07 18:39:14 UTC; 12s ago
+  Process: 22594 ExecStart=/usr/sbin/nginx (code=exited, status=0/SUCCESS)
+  Process: 22591 ExecStartPre=/usr/sbin/nginx -t (code=exited, status=0/SUCCESS)
+  Process: 22590 ExecStartPre=/usr/bin/rm -f /run/nginx.pid (code=exited, status=0/SUCCESS)
+ Main PID: 22596 (nginx)
+   CGroup: /system.slice/nginx.service
+           ├─22596 nginx: master process /usr/sbin/nginx
+           └─22597 nginx: worker process
+
+Jul 07 18:39:14 selinux systemd[1]: Starting The nginx HTTP and reverse proxy server...
+Jul 07 18:39:14 selinux nginx[22591]: nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+Jul 07 18:39:14 selinux nginx[22591]: nginx: configuration file /etc/nginx/nginx.conf test is successful
+Jul 07 18:39:14 selinux systemd[1]: Started The nginx HTTP and reverse proxy server.
 ```
 
 ### Задача 2
