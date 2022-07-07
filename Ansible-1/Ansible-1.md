@@ -10,6 +10,6 @@
 
 Ответ:
 
-[]!(https://github.com/Topper-crypto/otus/blob/main/Ansible-1/Ansible-1.png)
+![](https://github.com/Topper-crypto/otus/blob/main/Ansible-1/Ansible-1.png)
 
-[]!()
+![](https://github.com/Topper-crypto/otus/blob/main/Ansible-1/Ansible-2.jpg)
