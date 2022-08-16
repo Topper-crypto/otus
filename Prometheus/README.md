@@ -22,3 +22,5 @@
 В качестве результата прислать скриншот экрана - дашборд должен содержать в названии имя приславшего.
 
 ### Решение:
+
+![](https://github.com/Topper-crypto/otus/blob/main/Prometheus/Prometheus.png)
