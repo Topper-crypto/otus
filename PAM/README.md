@@ -11,7 +11,7 @@
 ### Решение:
 
 Для установки запрета на вход по SSH либо через физическую консоль пользователю необходимо внести изменения в фийлы конфигурации `sshd` и `login`:
-```yaml
+```bash
 $ sudo nano /etc/pam.d/sshd
 ```
 ```bash
@@ -38,7 +38,7 @@ session    include      postlogin
 # Used with polkit to reauthorize users in remote sessions
 -session   optional     pam_reauthorize.so prepare
 ```
-```yaml
+```bash
 $ sudo nano /etc/pam.d/login
 ```
 ```bash
@@ -70,7 +70,7 @@ session    include      postlogin
 
 Пытаемся зайти в тот день, когда работает правило:
 
-```yaml
+```bash
 $ ssh docker@localhost
 docker@localhost's password:
 Authentication failed.
@@ -83,10 +83,10 @@ Authentication failed.
 3. Устанавливаем компонент, с помощью которого мы сможем описывать правила входа в виде обычного bash скрипта `yum install pam_script -y`
 4. С помощью команды `rpm -ql pam_script` посмотреть какие файлы использует этот компонент
 
-```yaml
+```bash
 [vagrant@otuslinux ~]$ rpm -ql pam_script
 ```
-```yaml
+```bash
 /etc/pam-script.d
 /etc/pam_script
 /etc/pam_script_acct
@@ -133,7 +133,7 @@ session    include      postlogin
 -session   optional     pam_reauthorize.so prepare
 ```
 
-6. Приводим файл `/etc/pam_script` к следующему виду
+6. Приводим файл `/etc/pam_script` к следующему виду:
 
 ```bash
 #!/bin/bash
@@ -155,3 +155,27 @@ fi
 Если да, разрешаем вход. 
 
 Если он не состоит в группе admin, срабатывает проверка на то, какой сейчас день недели, если он больше 5 (выходные дни), то вход запрещен.
+
+## Дополнительное задание
+
+### Способ 1.
+
+Проводим поиск пользователя, которому необходимо дать права root:
+
+```bash
+$ grep docker /etc/passwd
+```
+```bash
+docker:x:1001:1001::/home/docker:/bin/bash
+```
+
+Далее меняем два значения 1001 на 0 (значения uid и gid root).
+
+Теперь когда пользователь будет заходить по своему логину, у него будут права root
+
+Также для того чтобы работать с файлами root, неоходимо добавить пользователя в группу `root`:
+
+```bash
+$ usermod -a -G root docker
+```
+
