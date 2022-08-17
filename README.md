@@ -27,3 +27,5 @@
 ДЗ №14 - Prometheus
 
 ДЗ №15 - PAM
+
+ДЗ №16 - logs
