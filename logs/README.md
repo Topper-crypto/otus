@@ -20,3 +20,37 @@
 
 ### Решение:
 
+Для реализации задачи использовались 
+* journald
+* systemd-journal-remote
+* systemd-journal-upload 
+
+Для передачи в `journald` логов nginx, в файл конфигурации nginx добавлен вывод ошибок и access
+
+```
+error_log  stderr;
+access_log syslog:server=unix:/dev/log;
+```
+
+Утилита `auditd` по умолчанию не выводит в `journald` логи.
+
+Был создан юнитфайл `systemd`, который выгружает логи в `journald`:
+```
+ExecStart=/bin/sh -c 'tail -f /var/log/audit/audit.log  | systemd-cat -t nginx_conf_audit'
+```
+
+Так же был создан юнит для сохрания лога в файл, который отправляется на удаленный сервер.
+
+Для просмотра логов необходимо выполнить следующие действия:
+```
+vagrant ssh log
+```
+```
+sudo journalctl -D /var/log/journal/remote -f
+```
+
+Для мониторинга логов в реальном времени был проброшен порт `8080` с ВМ `web`. 
+
+В браузере переходим по адресу `localhost:8080`, в логах отобразиться `access`.
+
+Чтобы в логах отобразилась ошибка, необходимо в браузере перейти на несуществующую страницу, например, `localhost:8080/example.php`
