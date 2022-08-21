@@ -31,28 +31,28 @@ SSH ключи автоматически отправляются на серв
 
 Получаем список бэкапов
 ```bash
-[vagrant@client ~]$ sudo borg list borg@backupserver:/var/backup/repo/client
+$ sudo borg list borg@backupserver:/var/backup/repo/client
 Remote: Warning: Permanently added 'backupserver,192.168.10.10' (ECDSA) to the list of known hosts.
 Enter passphrase for key ssh://borg@backupserver/var/backup/repo/client
 ```
 
 Удаляем директорию
 ```bash
-rm -rf /etc/yum
+$ rm -rf /etc/yum
 ```
 
 Извлекаем удаленыый контент из последнего бэкапа, просматриваем содержимое
 ```bash
-sudo borg list borg@backupserver:/var/backup/repo/client::client-2022-08-21T17:14:53
+$ sudo borg list borg@backupserver:/var/backup/repo/client::client-2022-08-21T17:14:53
 ```
 
 Извлекаем
 ```bash
-sudo borg extract borg@backupserver:/var/backup/repo/client::client-2022-08-21T17:14:53 etc/yum
+$ sudo borg extract borg@backupserver:/var/backup/repo/client::client-2022-08-21T17:14:53 etc/yum
 ```
 
 Результат
 ```bash
-[vagrant@client ~]$ sudo ls etc
+$ sudo ls etc
 yum
 ```
