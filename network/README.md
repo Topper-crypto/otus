@@ -169,7 +169,7 @@ Number of Usable Hosts:	14
 Subnet Mask:	255.255.255.240
 Wildcard Mask:	0.0.0.15
 ```
-wifi
+3. wi-fi
 ```
 IP Address:	192.168.0.64
 Network Address:	192.168.0.64
