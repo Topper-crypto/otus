@@ -29,3 +29,11 @@
 ДЗ №15 - PAM
 
 ДЗ №16 - logs
+
+ДЗ №17 - backup
+
+ДЗ №18 - network
+
+ДЗ №19 - PXE
+
+ДЗ №20 - firewalld
