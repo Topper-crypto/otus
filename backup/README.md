@@ -24,30 +24,34 @@
 
 ## Решение
 
-В Vagrant создается отдельнвый vdi который монтируется для бэкапа. 
-SSH ключи автоматически отправляются на сервер через nfs шару. 
-для автоматизации использовал юнит и таймер sustemd. вывод в journald через logger.
+В Vagrant создается отдельнвый `vdi`, который используется для бэкапа. 
+SSH ключи автоматически отправляются на сервер через `nfs`. 
+Для автоматизации был создан юнит файл и таймер `systemd`. 
+Вывод в `journald` через `logger`.
 
-получим список бэкапов
+Получаем список бэкапов
 ```bash
 [vagrant@client ~]$ sudo borg list borg@backupserver:/var/backup/repo/client
 Remote: Warning: Permanently added 'backupserver,192.168.10.10' (ECDSA) to the list of known hosts.
-Enter passphrase for key ssh://borg@backupserver/var/backup/repo/client: 
+Enter passphrase for key ssh://borg@backupserver/var/backup/repo/client
 ```
 
-удаляю директорию
+Удаляем директорию
 ```bash
 rm -rf /etc/yum
 ```
-извлечем удаленыый контент из поледнего бэкапап, посмотрим его содержимое
+
+Извлекаем удаленыый контент из последнего бэкапа, просматриваем содержимое
 ```bash
-sudo borg list borg@backupserver:/var/backup/repo/client::client-
+sudo borg list borg@backupserver:/var/backup/repo/client::client-2022-08-21T17:14:53
 ```
-извлекаем
+
+Извлекаем
 ```bash
-sudo borg extract borg@backupserver:/var/backup/repo/client::
+sudo borg extract borg@backupserver:/var/backup/repo/client::client-2022-08-21T17:14:53 etc/yum
 ```
-результат
+
+Результат
 ```bash
 [vagrant@client ~]$ sudo ls etc
 yum
