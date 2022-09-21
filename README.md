@@ -44,4 +44,4 @@
 
 ДЗ №23 - DNS
 
-ДЗ №24 - VLAN. LACP 
+ДЗ №24 - VLAN's
