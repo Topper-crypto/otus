@@ -9,8 +9,8 @@
 * в Office1 в тестовой подсети появляется сервера с доп интерфесами и адресами в internal сети testLAN
   * testClient1 - 10.10.10.254
   * testClient2 - 10.10.10.254
-  * testServer1- 10.10.10.1
-  * testServer2- 10.10.10.1
+  * testServer1 - 10.10.10.1
+  * testServer2 - 10.10.10.1
 * развести вланами
   * testClient1 <-> testServer1
   * testClient2 <-> testServer2
