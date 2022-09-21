@@ -1,0 +1,93 @@
+---
+- name: Config Eth
+  hosts: vm3
+  become: true
+  tasks:
+    - name: install frr
+      package:
+        name:
+        - frr
+        state: latest
+    - name: enable ospfd
+      replace:
+        path: /etc/frr/daemons
+        regexp: 'ospfd=no'
+        replace: 'ospfd=yes'
+      notify: restart frr
+    - name: copy zebra conf
+      copy:
+        src: /vagrant/confs/zebra.conf
+        dest: /etc/frr/zebra.conf
+        owner: frr
+        group: frr
+      notify: restart frr
+    - name: copy ospfd conf
+      vars:
+        int1: vlan20
+        int2: vlan30
+        network1: 192.168.20.0/24
+        network2: 192.168.30.0/24
+      template:
+        src: /vagrant/templates/ospfd.conf.j2
+        dest: /etc/frr/ospfd.conf
+        owner: frr
+        group: frr
+      notify: restart frr
+    - name: start and enable frr.service
+      systemd:
+        name: frr
+        state: started
+        enabled: yes
+    - name: create vlan 10
+      vars:
+        vlan_n: 30
+        eth_name: eth1
+        ip: 192.168.30.10
+        mask: 255.255.255.0
+      template:
+        src: /vagrant/templates/vlan.conf.j2
+        dest: /etc/sysconfig/network-scripts/ifcfg-vlan{{ vlan_n }}
+        owner: vagrant
+        group: vagrant
+      notify:
+        - restart network service
+    - name: create vlan 30
+      vars:
+        vlan_n: 20
+        eth_name: eth1
+        ip: 192.168.20.11
+        mask: 255.255.255.0
+      template:
+        src: /vagrant/templates/vlan.conf.j2
+        dest: /etc/sysconfig/network-scripts/ifcfg-vlan{{ vlan_n }}
+        owner: vagrant
+        group: vagrant
+      notify:
+        - restart network service
+    - name: ip forward    
+      sysctl:
+        name: net.ipv4.ip_forward
+        value: '1'
+        sysctl_set: yes
+        state: present
+        reload: yes
+    - name: remove def routing to NAT eth0
+      lineinfile:
+        path: /etc/sysconfig/network-scripts/ifcfg-eth0
+        insertafter: '^PERSISTENT_DHCLIENT="yes"'
+        line: 'DEFROUTE=no'
+      notify:
+        - restart network service
+        - flush route cache
+  handlers:
+    - name: restart network service
+      systemd:
+        name: NetworkManager.service
+        state: restarted
+    - name: restart frr
+      systemd:
+        name: frr
+        state: restarted
+    - name: flush route cache
+      become: yes
+      shell: ip route flush cache
