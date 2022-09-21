@@ -37,3 +37,11 @@
 ДЗ №19 - PXE
 
 ДЗ №20 - firewalld
+
+ДЗ №21 - OSPF
+
+ДЗ №22 - VPN
+
+ДЗ №23 - DNS
+
+ДЗ №24 - VLAN. LACP 
