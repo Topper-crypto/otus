@@ -24,11 +24,11 @@ vagrant up
 2. Проверка работы
 * Master
 
-
+![img](./img/master.png)
 
 * Slave
 
-
+![img](./img/slave.png)
 
 * Backup
 ```yaml
