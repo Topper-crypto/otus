@@ -47,3 +47,7 @@
 ДЗ №24 - VLAN's
 
 ДЗ №25 - LDAP
+
+ДЗ №26 - MySQL
+
+ДЗ №27 - PostgreSQL
