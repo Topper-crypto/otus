@@ -53,3 +53,5 @@ CHANGE MASTER TO MASTER_HOST = "192.168.11.150", MASTER_PORT = 3306, MASTER_USER
 START SLAVE;
 ```
 * результат
+
+![img](./img/mysql.png)
