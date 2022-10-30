@@ -4,8 +4,8 @@
   become: true
   vars:
     ipaadmin_user: admin
-    ipadm_password: qwe!23asd
-    ipaadmin_password: qwe!23asd
+    ipadm_password: Qwer123T
+    ipaadmin_password: Qwer123T
     ipaserver_domain: test.local
     ipaserver_realm: TEST.LOCAL
     ipaserver_install_packages: true
@@ -37,16 +37,16 @@
     state: present
     
   post_tasks:
-    - name: Add andy
+    - name: Add user1
       ipa_user:
-        name: andy
+        name: user1
         state: present
-        givenname: andy
-        sn: andy
+        givenname: user1
+        sn: user1
         sshpubkey:
-        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQComi4Re9DJjeTUGdyM6PDwbb6bzGk0uIoqbpy/Q4D9KqtoQhZUm+L+pgRFLMidnCm8xpfvhXiNARjlsS2HZ28tj7d950cn/o/UCioikKbhL1Xzh+XR95PXmyMEu4Wg6lT1UDfxnNCWRtVJsZE2jDQBPeFwF+sSRd/DKBX0cVR3j4fRfkqwVLSBU9b3t/GaEKryir2MuAvz3uNOR/W9a6ClfFHi88uO/rW2Ro60tpm/20jLgGG2hBbd+4SynTs3FnYbECo8SJcc56faxMWo8dTIk60UzROsU6rL969qiq0Toq4G83V8XLs0Cd9Nzu8zvdZDlG5WDv1AMuEbNVrshy8N andy
-        password: qwe!23asd
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQComi4Re9DJjeTUGdyM6PDwbb6bzGk0uIoqbpy/Q4D9KqtoQhZUm+L+pgRFLMidnCm8xpfvhXiNARjlsS2HZ28tj7d950cn/o/UCioikKbhL1Xzh+XR95PXmyMEu4Wg6lT1UDfxnNCWRtVJsZE2jDQBPeFwF+sSRd/DKBX0cVR3j4fRfkqwVLSBU9b3t/GaEKryir2MuAvz3uNOR/W9a6ClfFHi88uO/rW2Ro60tpm/20jLgGG2hBbd+4SynTs3FnYbECo8SJcc56faxMWo8dTIk60UzROsU6rL969qiq0Toq4G83V8XLs0Cd9Nzu8zvdZDlG5WDv1AMuEbNVrshy8N user1
+        password: Qwer123T
         krbpasswordexpiration:  20220121182022
         ipa_host: server.test.local
         ipa_user: admin
-        ipa_pass: qwe!23asd
+        ipa_pass: Qwer123T
